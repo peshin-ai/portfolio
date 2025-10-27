@@ -1,76 +1,8 @@
-import { useForm, Controller } from "react-hook-form";
-import type { Control } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import type { ContactFormInputs } from "../types";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { profile } from "../lib/data";
-
-type ContactFormInputs = {
-  name: string;
-  email: string;
-  message: string;
-};
-
-type InputFieldProps = {
-  name: keyof ContactFormInputs;
-  label: string;
-  control: Control<ContactFormInputs>;
-  type?: string;
-  placeholder?: string;
-  rules?: any;
-  multiline?: boolean;
-  rows?: number;
-  autoComplete?: string;
-  errors?: any;
-};
-
-const InputField: React.FC<InputFieldProps> = ({
-  name,
-  label,
-  control,
-  type = "text",
-  placeholder,
-  rules,
-  multiline = false,
-  rows = 4,
-  autoComplete,
-  errors,
-}) => (
-  <div>
-    <label className="block mb-2 font-semibold text-slate-800" htmlFor={name}>
-      {label}
-    </label>
-    <Controller
-      name={name}
-      control={control}
-      rules={rules}
-      render={({ field }) =>
-        multiline ? (
-          <textarea
-            {...field}
-            id={name}
-            rows={rows}
-            placeholder={placeholder}
-            autoComplete={autoComplete}
-            className="w-full border border-slate-300 rounded-lg px-4 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-slate-900 text-base transition"
-          />
-        ) : (
-          <input
-            {...field}
-            id={name}
-            type={type}
-            placeholder={placeholder}
-            autoComplete={autoComplete}
-            className="w-full border border-slate-300 rounded-lg px-4 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 text-slate-900 text-base transition"
-          />
-        )
-      }
-    />
-    {errors?.[name] && (
-      <span className="text-red-500 text-xs mt-1 block">
-        {errors[name].message}
-      </span>
-    )}
-  </div>
-);
+import InputField from "../components/ui/input";
 
 function ContactSection() {
   const {
@@ -156,7 +88,7 @@ function ContactSection() {
             rules={{
               required: "Email is required",
               pattern: {
-                value: /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/,
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                 message: "Invalid email address",
               },
             }}

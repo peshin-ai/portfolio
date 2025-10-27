@@ -1,3 +1,5 @@
+import type { Control } from "react-hook-form";
+
 export interface ExperienceNode {
   id: string;
   company: string;
@@ -11,4 +13,37 @@ export interface ExperienceNode {
   icon: string;
   color: string;
   isActive?: boolean;
+}
+
+export interface Skill {
+  name: string;
+  level: number;
+  icon: string;
+  category?: string;
+  projects: string[];
+  description: string;
+}
+
+export interface SkillCategory {
+  title: string;
+  skills: Skill[];
+}
+
+export interface ContactFormInputs {
+  name: string;
+  email: string;
+  message: string;
+}
+
+export interface InputFieldProps {
+  name: keyof ContactFormInputs;
+  label: string;
+  control: Control<ContactFormInputs>;
+  type?: string;
+  placeholder?: string;
+  rules?: any;
+  multiline?: boolean;
+  rows?: number;
+  autoComplete?: string;
+  errors?: any;
 }
