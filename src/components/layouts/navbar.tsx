@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import type { MouseEvent } from "react";
-import { animate } from "framer-motion";
+import { animate, motion, AnimatePresence } from "framer-motion";
+import { X, Menu } from "lucide-react";
 
 const NAV_LINKS = [
   { label: "Home", href: "#home" },
@@ -9,8 +10,9 @@ const NAV_LINKS = [
   { label: "Contact", href: "#contact" },
 ];
 
-const Header: React.FC = () => {
+const NavBar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
 
   const handleNavClick = (
@@ -30,6 +32,7 @@ const Header: React.FC = () => {
         onUpdate: (v) => window.scrollTo(0, v),
       });
     }
+    setDrawerOpen(false);
   };
 
   useEffect(() => {
@@ -59,7 +62,8 @@ const Header: React.FC = () => {
           <span className="text-2xl font-extrabold tracking-tight select-none">
             Tuan Ung
           </span>
-          <nav className="flex gap-4 md:gap-8 text-base font-semibold">
+          {/* Desktop nav */}
+          <nav className="hidden md:flex gap-4 md:gap-8 text-base font-semibold">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.label}
@@ -71,10 +75,58 @@ const Header: React.FC = () => {
               </a>
             ))}
           </nav>
+          {/* Mobile menu icon */}
+          <button
+            className="md:hidden flex items-center justify-center p-2 rounded hover:bg-gray-800 focus:outline-none"
+            aria-label="Open menu"
+            onClick={() => setDrawerOpen((v) => !v)}
+          >
+            <Menu size={28} strokeWidth={2} />
+          </button>
         </div>
+        {/* Mobile drawer */}
+        <AnimatePresence>
+          {drawerOpen && (
+            <motion.div
+              className="fixed inset-0 z-50 bg-black bg-opacity-60 flex"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <motion.div
+                className="ml-auto w-64 bg-gray-900 h-full shadow-lg flex flex-col p-6"
+                initial={{ x: 300 }}
+                animate={{ x: 0 }}
+                exit={{ x: 300 }}
+                transition={{ type: "spring", stiffness: 400, damping: 32 }}
+              >
+                <button
+                  className="self-end mb-6 p-2 rounded hover:bg-gray-800"
+                  aria-label="Close menu"
+                  onClick={() => setDrawerOpen(false)}
+                >
+                  <X size={28} strokeWidth={2} />
+                </button>
+                <nav className="flex flex-col gap-6 text-lg font-semibold">
+                  {NAV_LINKS.map((link) => (
+                    <a
+                      key={link.label}
+                      href={link.href}
+                      className="px-2 py-1 hover:text-yellow-300 transition"
+                      onClick={(e) => handleNavClick(e, link)}
+                    >
+                      {link.label}
+                    </a>
+                  ))}
+                </nav>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </header>
   );
 };
 
-export default Header;
+export default NavBar;

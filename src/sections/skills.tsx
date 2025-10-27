@@ -1,385 +1,15 @@
-import { useState, useEffect } from "react";
-
-interface Skill {
-  name: string;
-  level: number;
-  icon: string;
-  category?: string;
-  projects: string[];
-  description: string;
-}
-
-interface SkillCategory {
-  title: string;
-  skills: Skill[];
-}
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Button } from "../components/ui/button";
+import { ChevronDown } from "lucide-react";
+import type { Skill } from "../types";
+import { skillCategories } from "../lib/data";
+import { useMobile } from "../hooks/use-mobile";
 
 const Skills = () => {
   const [activeCategory, setActiveCategory] = useState("all");
   const [showAll, setShowAll] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkIsMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    checkIsMobile();
-    window.addEventListener("resize", checkIsMobile);
-
-    return () => window.removeEventListener("resize", checkIsMobile);
-  }, []);
-
-  const skillCategories: Record<string, SkillCategory> = {
-    frontend: {
-      title: "Frontend Frameworks",
-      skills: [
-        {
-          name: "ReactJS",
-          level: 85,
-          icon: "⚛️",
-          projects: [
-            "NODO AI Trading Platform ($4.5M liquidity)",
-            "360F Micro-frontend (50K+ users)",
-            "Insurance Platform (10K+ clients)",
-          ],
-          description:
-            "Built enterprise-grade applications with complex state management and real-time data",
-        },
-        {
-          name: "Vue2",
-          level: 80,
-          icon: "💚",
-          projects: [
-            "NODO DApp Features (200K+ users)",
-            "360F Insurance Platform",
-          ],
-          description:
-            "Developed interactive blockchain features and enterprise insurance interfaces",
-        },
-        {
-          name: "Nuxt2",
-          level: 78,
-          icon: "🚀",
-          projects: ["NODO DApp Features", "360F Platform Extensions"],
-          description:
-            "Server-side rendering for improved SEO and performance in blockchain applications",
-        },
-        {
-          name: "HTML5",
-          level: 85,
-          icon: "🌐",
-          projects: [
-            "All Projects",
-            "Landing Pages (40K+ visitors)",
-            "Component Libraries",
-          ],
-          description:
-            "Semantic markup for accessibility and SEO optimization across all projects",
-        },
-        {
-          name: "CSS3",
-          level: 82,
-          icon: "🎨",
-          projects: [
-            "Responsive Web Interfaces",
-            "Material UI Customizations",
-            "360F Design System",
-          ],
-          description:
-            "Advanced styling with animations, responsive design, and design system implementation",
-        },
-        {
-          name: "JavaScript (ES6+)",
-          level: 83,
-          icon: "⚡",
-          projects: [
-            "Trading Algorithms",
-            "Real-time Data Processing",
-            "Component Logic",
-          ],
-          description:
-            "Modern JavaScript for complex business logic and real-time financial data processing",
-        },
-      ],
-    },
-    ui: {
-      title: "UI Libraries & Styling",
-      skills: [
-        {
-          name: "Material UI",
-          level: 82,
-          icon: "📱",
-          projects: [
-            "360F Insurance Platform",
-            "Reusable Component Libraries",
-            "20+ Application Modules",
-          ],
-          description:
-            "Built consistent UI components following Material Design principles for enterprise applications",
-        },
-        {
-          name: "Ant Design",
-          level: 80,
-          icon: "🐜",
-          projects: [
-            "NODO DApp Features",
-            "Enterprise Dashboards",
-            "Admin Interfaces",
-          ],
-          description:
-            "Implemented professional admin interfaces and complex data visualization components",
-        },
-        {
-          name: "Tailwind CSS",
-          level: 85,
-          icon: "💨",
-          projects: [
-            "NODO Trading Platform",
-            "Modern Landing Pages",
-            "Component Styling",
-          ],
-          description:
-            "Utility-first CSS for rapid development and consistent design systems",
-        },
-        {
-          name: "Framer Motion",
-          level: 78,
-          icon: "🎭",
-          projects: [
-            "NODO Platform Animations",
-            "Interactive UI Elements",
-            "Page Transitions",
-          ],
-          description:
-            "Advanced animations and micro-interactions for enhanced user experience",
-        },
-        {
-          name: "SCSS/SASS",
-          level: 80,
-          icon: "💎",
-          projects: [
-            "360F Styling Architecture",
-            "Design System Variables",
-            "Responsive Layouts",
-          ],
-          description:
-            "Structured styling with variables, mixins, and modular architecture",
-        },
-        {
-          name: "Responsive Design",
-          level: 85,
-          icon: "📐",
-          projects: [
-            "All Projects",
-            "Mobile-first Approach",
-            "Cross-device Compatibility",
-          ],
-          description:
-            "WCAG 2.1 compliant responsive interfaces ensuring inclusive user experience",
-        },
-      ],
-    },
-    backend: {
-      title: "API & State Management",
-      skills: [
-        {
-          name: "Axios",
-          level: 82,
-          icon: "🔗",
-          projects: [
-            "All API Integrations",
-            "Real-time Trading Data",
-            "Dynamic UI Components",
-          ],
-          description:
-            "HTTP client for seamless API integration and real-time data fetching",
-        },
-        {
-          name: "RESTful APIs",
-          level: 80,
-          icon: "🌍",
-          projects: [
-            "360F Insurance APIs",
-            "NODO Trading APIs",
-            "Third-party Integrations",
-          ],
-          description:
-            "Integration with enterprise-grade APIs for financial and insurance platforms",
-        },
-        {
-          name: "Redux",
-          level: 78,
-          icon: "🔄",
-          projects: [
-            "360F State Management",
-            "Complex Application State",
-            "Cross-component Data",
-          ],
-          description:
-            "Predictable state management for large-scale applications with complex data flows",
-        },
-        {
-          name: "Redux-toolkit",
-          level: 75,
-          icon: "🛠️",
-          projects: [
-            "Modern Redux Implementation",
-            "Simplified State Logic",
-            "API State Management",
-          ],
-          description:
-            "Modern Redux patterns with reduced boilerplate for efficient development",
-        },
-        {
-          name: "React-query",
-          level: 78,
-          icon: "⚡",
-          projects: [
-            "NODO Trading Platform",
-            "Data Caching",
-            "Server State Management",
-          ],
-          description:
-            "Powerful data fetching and caching for improved performance and user experience",
-        },
-      ],
-    },
-    tools: {
-      title: "Development Tools",
-      skills: [
-        {
-          name: "Chart.js",
-          level: 75,
-          icon: "📊",
-          projects: [
-            "360F Financial Dashboard",
-            "Data Visualization Components",
-            "Client Decision-making Tools",
-          ],
-          description:
-            "Interactive financial dashboards improving client decision-making efficiency by 25%",
-        },
-        {
-          name: "Recharts.js",
-          level: 70,
-          icon: "📈",
-          projects: [
-            "Real-time Trading Charts",
-            "Performance Analytics",
-            "Data Insights Visualization",
-          ],
-          description:
-            "React-based charting library for responsive and interactive data visualization",
-        },
-        {
-          name: "React-hook-form",
-          level: 80,
-          icon: "📝",
-          projects: [
-            "NODO Platform Forms",
-            "User Registration",
-            "Complex Form Validation",
-          ],
-          description:
-            "Performant form management with validation for better user experience",
-        },
-        {
-          name: "Git",
-          level: 80,
-          icon: "🌿",
-          projects: [
-            "All Projects",
-            "Version Control",
-            "Collaborative Development",
-          ],
-          description:
-            "Version control for collaborative development across multiple teams and projects",
-        },
-        {
-          name: "GitHub",
-          level: 82,
-          icon: "🐙",
-          projects: ["Code Reviews", "Team Collaboration", "CI/CD Integration"],
-          description:
-            "Code reviews, mentorship, and fostering code quality in team environments",
-        },
-        {
-          name: "GitHub Copilot",
-          level: 85,
-          icon: "🤖",
-          projects: [
-            "AI-assisted Development",
-            "Code Generation",
-            "Productivity Enhancement",
-          ],
-          description:
-            "AI-powered development tool enhancing coding efficiency and code quality",
-        },
-      ],
-    },
-    management: {
-      title: "Project & Architecture",
-      skills: [
-        {
-          name: "Jira",
-          level: 75,
-          icon: "📋",
-          projects: [
-            "360F Project Management",
-            "Sprint Planning",
-            "Agile/Scrum Methodologies",
-          ],
-          description:
-            "Daily stand-ups and sprint planning with exposure to Agile/Scrum methodologies",
-        },
-        {
-          name: "Monday",
-          level: 70,
-          icon: "📅",
-          projects: [
-            "Team Collaboration",
-            "Task Management",
-            "Project Tracking",
-          ],
-          description:
-            "Project management and team collaboration for efficient workflow coordination",
-        },
-        {
-          name: "Notion",
-          level: 78,
-          icon: "📖",
-          projects: ["Documentation", "Knowledge Management", "Team Wiki"],
-          description:
-            "Comprehensive documentation and knowledge management for project continuity",
-        },
-        {
-          name: "Micro-frontend",
-          level: 80,
-          icon: "🏗️",
-          projects: [
-            "360F Enterprise Architecture",
-            "Modular Development",
-            "Team Scalability",
-          ],
-          description:
-            "Enterprise-grade micro-frontend architecture supporting 50K+ users with modular development",
-        },
-        {
-          name: "Component-based Design",
-          level: 82,
-          icon: "🧩",
-          projects: [
-            "Reusable Component Libraries",
-            "Atomic Design Principles",
-            "Development Time Reduction",
-          ],
-          description:
-            "Atomic design principles reducing development time by 40% across development teams",
-        },
-      ],
-    },
-  };
+  const isMobile = useMobile();
 
   const getAllSkills = (): (Skill & { category: string })[] => {
     return Object.values(skillCategories).flatMap((category) =>
@@ -427,7 +57,10 @@ const Skills = () => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800" id="skills">
+    <section
+      className="py-20 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800"
+      id="skills"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
@@ -461,126 +94,120 @@ const Skills = () => {
           ))}
         </div>
 
-        {/* Skills Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {getDisplayedSkills().map((skill, index) => (
-            <div
-              key={`${skill.name}-${index}`}
-              className="group bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-slate-100 dark:border-slate-700 relative overflow-hidden"
-            >
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center space-x-3">
-                  <span className="text-2xl">{skill.icon}</span>
-                  <h3 className="font-semibold text-slate-900 dark:text-white">
-                    {skill.name}
-                  </h3>
-                </div>
-                <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
-                  {skill.level}%
-                </span>
-              </div>
-
-              {/* Progress Bar */}
-              <div className="relative mb-4">
-                <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-3 mb-2">
-                  <div
-                    className="bg-gradient-to-r from-blue-500 to-purple-600 h-3 rounded-full transition-all duration-1000 ease-out"
-                    style={{ width: `${skill.level}%` }}
-                  ></div>
-                </div>
-
-                {/* Skill Level Indicator */}
-                <div className="flex justify-between text-xs text-slate-500 dark:text-slate-400">
-                  <span>Beginner</span>
-                  <span>Expert</span>
-                </div>
-              </div>
-
-              {/* Description */}
-              <p className="text-sm text-slate-600 dark:text-slate-300 mb-3 line-clamp-2">
-                {skill.description}
-              </p>
-
-              {/* Tooltip Content - Hidden by default, shown on hover */}
+        {/* Skills Grid with animation */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={showAll ? "all" : "partial"}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            initial={{ opacity: 0, y: 32 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 32 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {getDisplayedSkills().map((skill, index) => (
               <div
-                className="absolute inset-0 bg-slate-900/95 dark:bg-slate-800/95 backdrop-blur-sm rounded-xl pl-8 pr-6 py-6 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-10 [&::-webkit-scrollbar]:w-0.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-slate-400 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb:hover]:bg-slate-300"
-                style={{
-                  scrollbarWidth: "thin",
-                  scrollbarColor: "rgb(148 163 184) transparent",
-                }}
+                key={`${skill.name}-${index}`}
+                className="group bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-slate-100 dark:border-slate-700 relative overflow-hidden"
               >
-                <div className="h-full flex flex-col">
-                  <div className="flex items-center space-x-3 mb-4">
+                {/* ...existing code for each skill card... */}
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center space-x-3">
                     <span className="text-2xl">{skill.icon}</span>
-                    <h3 className="font-semibold text-white text-lg">
+                    <h3 className="font-semibold text-slate-900 dark:text-white">
                       {skill.name}
                     </h3>
-                    <span className="text-sm font-medium text-blue-300">
-                      {skill.level}%
-                    </span>
                   </div>
-
-                  <div className="flex-1 overflow-y-auto">
-                    <p className="text-slate-200 text-sm mb-4 leading-relaxed">
-                      {skill.description}
-                    </p>
-
-                    <div>
-                      <h4 className="text-white font-medium mb-2 text-sm">
-                        Projects Used In:
-                      </h4>
-                      <ul className="space-y-1">
-                        {skill.projects.map((project, projectIndex) => (
-                          <li
-                            key={projectIndex}
-                            className="text-slate-300 text-xs flex items-start space-x-2"
-                          >
-                            <span className="text-blue-300 mt-1">•</span>
-                            <span>{project}</span>
-                          </li>
-                        ))}
-                      </ul>
+                  <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
+                    {skill.level}%
+                  </span>
+                </div>
+                {/* Progress Bar */}
+                <div className="relative mb-4">
+                  <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-3 mb-2">
+                    <div
+                      className="bg-gradient-to-r from-blue-500 to-purple-600 h-3 rounded-full transition-all duration-1000 ease-out"
+                      style={{ width: `${skill.level}%` }}
+                    ></div>
+                  </div>
+                  {/* Skill Level Indicator */}
+                  <div className="flex justify-between text-xs text-slate-500 dark:text-slate-400">
+                    <span>Beginner</span>
+                    <span>Expert</span>
+                  </div>
+                </div>
+                {/* Description */}
+                <p className="text-sm text-slate-600 dark:text-slate-300 mb-3 line-clamp-2">
+                  {skill.description}
+                </p>
+                {/* Tooltip Content - Hidden by default, shown on hover */}
+                <div
+                  className="absolute inset-0 bg-slate-900/95 dark:bg-slate-800/95 backdrop-blur-sm rounded-xl pl-8 pr-6 py-6 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-10 [&::-webkit-scrollbar]:w-0.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-slate-400 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb:hover]:bg-slate-300"
+                  style={{
+                    scrollbarWidth: "thin",
+                    scrollbarColor: "rgb(148 163 184) transparent",
+                  }}
+                >
+                  <div className="h-full flex flex-col">
+                    <div className="flex items-center space-x-3 mb-4">
+                      <span className="text-2xl">{skill.icon}</span>
+                      <h3 className="font-semibold text-white text-lg">
+                        {skill.name}
+                      </h3>
+                      <span className="text-sm font-medium text-blue-300">
+                        {skill.level}%
+                      </span>
+                    </div>
+                    <div className="flex-1 overflow-y-auto">
+                      <p className="text-slate-200 text-sm mb-4 leading-relaxed">
+                        {skill.description}
+                      </p>
+                      <div>
+                        <h4 className="text-white font-medium mb-2 text-sm">
+                          Projects Used In:
+                        </h4>
+                        <ul className="space-y-1">
+                          {skill.projects.map((project, projectIndex) => (
+                            <li
+                              key={projectIndex}
+                              className="text-slate-300 text-xs flex items-start space-x-2"
+                            >
+                              <span className="text-blue-300 mt-1">•</span>
+                              <span>{project}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
+                {/* Category Badge (only show when 'all' is selected) */}
+                {activeCategory === "all" && "category" in skill && (
+                  <div className="mt-3">
+                    <span className="inline-block px-3 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-full">
+                      {(skill as Skill & { category: string }).category}
+                    </span>
+                  </div>
+                )}
               </div>
-
-              {/* Category Badge (only show when 'all' is selected) */}
-              {activeCategory === "all" && "category" in skill && (
-                <div className="mt-3">
-                  <span className="inline-block px-3 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-full">
-                    {(skill as Skill & { category: string }).category}
-                  </span>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
 
         {/* View More Button */}
         {shouldShowViewMore() && (
           <div className="flex justify-center mt-8">
-            <button
+            <Button
               onClick={() => setShowAll(!showAll)}
-              className="group flex items-center space-x-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              className="group flex items-center bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
             >
               <span>{showAll ? "View Less" : "View More Skills"}</span>
-              <svg
+              <ChevronDown
                 className={`w-4 h-4 transition-transform duration-300 ${
                   showAll ? "rotate-180" : ""
                 }`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </button>
+                strokeWidth={2}
+              />
+            </Button>
           </div>
         )}
 

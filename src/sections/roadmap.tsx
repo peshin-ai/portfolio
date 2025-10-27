@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { experiences } from "../lib/data";
 
 const Roadmap = () => {
@@ -9,7 +10,10 @@ const Roadmap = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 relative overflow-hidden" id="roadmap">
+    <section
+      className="py-20 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 relative overflow-hidden"
+      id="roadmap"
+    >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="absolute inset-0 opacity-5 dark:opacity-10">
           <div className="absolute top-0 left-1/2 w-px h-full bg-gradient-to-b from-blue-500 to-purple-600"></div>
@@ -57,7 +61,7 @@ const Roadmap = () => {
                         ? "md:justify-end md:pr-8"
                         : "md:justify-start md:pl-8"
                     }
-                    pl-16 md:pl-0
+                    pl-16 md:pl-0 relative z-10
                   `}
                 >
                   <div
@@ -71,7 +75,11 @@ const Roadmap = () => {
                     <div className="p-4 md:p-6">
                       <div className="flex items-start justify-between mb-3 md:mb-4">
                         <div className="flex-1 min-w-0">
-                          <h3 className="text-base md:text-lg font-bold text-slate-900 dark:text-white mb-1 truncate">
+                          <h3
+                            className={`text-base md:text-lg font-bold text-slate-900 dark:text-white mb-1 ${
+                              selectedNode === exp.id ? "" : "truncate"
+                            }`}
+                          >
                             {exp.company}
                           </h3>
                           <p className="text-sm md:text-base text-blue-600 dark:text-blue-400 font-medium">
