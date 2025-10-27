@@ -1,6 +1,12 @@
 import { Button } from "../components/ui/button";
 
 export function Hero() {
+  const handleContactClick = () => {
+    const contactSection = document.getElementById("contact");
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   return (
     <div className="min-h-screen bg-background" id="home">
       {/* Hero Section */}
@@ -22,7 +28,12 @@ export function Hero() {
             </div>
 
             <div className="flex gap-4">
-              <Button variant="outline" size="lg" className="px-6 font-dm-sans">
+              <Button
+                variant="outline"
+                size="lg"
+                className="px-6 font-dm-sans"
+                onClick={handleContactClick}
+              >
                 Contact Me
               </Button>
             </div>
