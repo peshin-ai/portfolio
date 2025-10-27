@@ -1,6 +1,6 @@
 import { Button } from "../components/ui/button";
 
-export function Hero() {
+const Hero = () => {
   const handleContactClick = () => {
     const contactSection = document.getElementById("contact");
     if (contactSection) {
@@ -111,6 +111,6 @@ export function Hero() {
       </section>
     </div>
   );
-}
+};
 
 export default Hero;
