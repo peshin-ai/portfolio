@@ -165,6 +165,10 @@ export const skillCategories = {
         projects: ["NODO DApp Community Features (200K+ users)"],
       },
       {
+        name: "Nuxt2",
+        projects: ["NODO DApp Community Features (200K+ users)"],
+      },
+      {
         name: "TypeScript",
         projects: ["NODO AI Trading Platform", "360F Micro-frontend"],
       },
@@ -186,8 +190,29 @@ export const skillCategories = {
       },
       { name: "Shadcn UI", projects: ["NODO AI Trading Platform"] },
       {
-        name: "Motion",
-        projects: ["NODO Trading Platform", "Modern Landing Pages"],
+        name: "Framer Motion",
+        projects: ["NODO AI Trading Platform"],
+      },
+      {
+        name: "React Hook Form",
+        projects: ["NODO AI Trading Platform", "360F Micro-frontend"],
+      },
+
+      {
+        name: "Vitest",
+        projects: ["NODO AI Trading Platform"],
+      },
+      {
+        name: "Testing-Library",
+        projects: ["360F Micro-frontend"],
+      },
+      {
+        name: "Chart.js",
+        projects: ["360F Insurance Dashboard"],
+      },
+      {
+        name: "Recharts",
+        projects: ["NODO AI Trading Platform"],
       },
     ],
   },
@@ -217,6 +242,11 @@ export const skillCategories = {
       { name: "REST", projects: ["360F Insurance APIs", "NODO Trading APIs"] },
       { name: "React Query", projects: ["NODO AI Trading Platform"] },
       { name: "Zustand", projects: ["NODO AI Trading Platform"] },
+      {
+        name: "Redux",
+        projects: ["360F Micro-frontend"],
+      },
+      { name: "Redux Saga", projects: ["360F Micro-frontend"] },
     ],
   },
   quality: {
