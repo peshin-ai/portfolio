@@ -49,7 +49,7 @@ export const experiences: ExperienceNode[] = [
       "40K+ new visitors attracted",
       "35% organic traffic increase",
     ],
-    icon: "/public/roadmap/nodo.png",
+    icon: "/roadmap/nodo.png",
     size: "w-8 h-8",
     color: "white",
     isActive: true,

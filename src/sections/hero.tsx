@@ -43,7 +43,7 @@ const Hero = () => {
           <div className="flex justify-center lg:justify-end">
             <div className="w-80 h-80 lg:w-[400px] lg:h-[400px] rounded-3xl overflow-hidden bg-black">
               <img
-                src="/public/my-avatar.jpg"
+                src="/my-avatar.jpg"
                 alt="Ung Ta Hoang Tuan - Frontend Engineer"
                 className="w-full h-full object-cover"
               />
