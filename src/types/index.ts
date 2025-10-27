@@ -12,6 +12,7 @@ export interface ExperienceNode {
   achievements: string[];
   icon: string;
   color: string;
+  size?: string;
   isActive?: boolean;
 }
 

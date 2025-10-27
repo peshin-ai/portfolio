@@ -13,6 +13,7 @@ const NAV_LINKS = [
 const NavBar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>(NAV_LINKS[0].href);
   const headerRef = useRef<HTMLDivElement>(null);
 
   const handleNavClick = (
@@ -25,7 +26,7 @@ const NavBar: React.FC = () => {
     const isHome = id === "home";
     if (el) {
       const y =
-        el.getBoundingClientRect().top + window.scrollY + (isHome ? -50 : 0);
+        el.getBoundingClientRect().top + window.scrollY + (isHome ? -100 : 0);
       animate(window.scrollY, y, {
         duration: 0.7,
         ease: [0.22, 1, 0.36, 1],
@@ -33,13 +34,28 @@ const NavBar: React.FC = () => {
       });
     }
     setDrawerOpen(false);
+    setActiveSection(link.href);
   };
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 24);
+      // Section detection
+      let found = NAV_LINKS[0].href;
+      for (const link of NAV_LINKS) {
+        const id = link.href.replace("#", "");
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 80 && rect.bottom > 80) {
+            found = link.href;
+            break;
+          }
+        }
+      }
+      setActiveSection(found);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -63,17 +79,33 @@ const NavBar: React.FC = () => {
             Tuan Ung
           </span>
           {/* Desktop nav */}
-          <nav className="hidden md:flex gap-4 md:gap-8 text-base font-semibold">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="relative px-2 py-1 hover:text-yellow-300 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-300"
-                onClick={(e) => handleNavClick(e, link)}
-              >
-                {link.label}
-              </a>
-            ))}
+          <nav className="hidden md:flex gap-4 md:gap-8 text-base font-semibold relative">
+            {NAV_LINKS.map((link) => {
+              const isActive = activeSection === link.href;
+              return (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className={`relative px-2 py-1 hover:text-yellow-300 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-300 ${
+                    isActive ? "text-yellow-300" : ""
+                  }`}
+                  onClick={(e) => handleNavClick(e, link)}
+                >
+                  {link.label}
+                  {/* Animated underline */}
+                  <span
+                    className="absolute left-0 right-0 -bottom-1 h-0.5"
+                    style={{
+                      background: isActive
+                        ? "linear-gradient(90deg, #facc15 60%, #fbbf24 100%)"
+                        : "transparent",
+                      borderRadius: 2,
+                      transition: "background 0.3s",
+                    }}
+                  />
+                </a>
+              );
+            })}
           </nav>
           {/* Mobile menu icon */}
           <button
@@ -109,16 +141,31 @@ const NavBar: React.FC = () => {
                   <X size={28} strokeWidth={2} />
                 </button>
                 <nav className="flex flex-col gap-6 text-lg font-semibold">
-                  {NAV_LINKS.map((link) => (
-                    <a
-                      key={link.label}
-                      href={link.href}
-                      className="px-2 py-1 hover:text-yellow-300 transition"
-                      onClick={(e) => handleNavClick(e, link)}
-                    >
-                      {link.label}
-                    </a>
-                  ))}
+                  {NAV_LINKS.map((link) => {
+                    const isActive = activeSection === link.href;
+                    return (
+                      <a
+                        key={link.label}
+                        href={link.href}
+                        className={`px-2 py-1 hover:text-yellow-300 transition ${
+                          isActive ? "text-yellow-300" : ""
+                        }`}
+                        onClick={(e) => handleNavClick(e, link)}
+                      >
+                        {link.label}
+                        {isActive && (
+                          <span
+                            className="block h-0.5 mt-1 w-full"
+                            style={{
+                              background:
+                                "linear-gradient(90deg, #facc15 60%, #fbbf24 100%)",
+                              borderRadius: 2,
+                            }}
+                          />
+                        )}
+                      </a>
+                    );
+                  })}
                 </nav>
               </motion.div>
             </motion.div>

@@ -1,5 +1,5 @@
+import { motion } from "framer-motion";
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { experiences } from "../lib/data";
 
 const Roadmap = () => {
@@ -45,12 +45,26 @@ const Roadmap = () => {
                 <div className="md:hidden absolute left-3 top-6 w-12 h-0.5 bg-gradient-to-r from-blue-500 to-purple-600 opacity-50"></div>
 
                 <div
-                  className={`absolute w-8 h-8 rounded-full bg-gradient-to-r ${exp.color} shadow-lg cursor-pointer hover:scale-110 transition-transform duration-300 flex items-center justify-center text-white font-bold z-10
+                  className={`absolute w-8 h-8 rounded-full bg-white shadow-lg cursor-pointer hover:scale-110 transition-transform duration-300 flex items-center justify-center text-white font-bold z-10
                     md:left-1/2 md:top-5 md:transform md:-translate-x-1/2
                     left-3 top-2 transform -translate-x-1/2`}
                   onClick={() => handleNodeClick(exp.id)}
                 >
-                  <span className="text-sm">{exp.icon}</span>
+                  <motion.span
+                    initial={{ scale: 0.7, opacity: 0.7 }}
+                    animate={{ scale: 1.1, opacity: 1 }}
+                    transition={{
+                      repeat: Infinity,
+                      repeatType: "reverse",
+                      duration: 1.2,
+                      ease: "easeInOut",
+                    }}
+                    className={`block w-4 h-4 rounded-full shadow-md ${
+                      exp.isActive
+                        ? "bg-green-500 shadow-green-400/60"
+                        : "bg-blue-500 shadow-blue-400/60"
+                    }`}
+                  />
                 </div>
 
                 <div

@@ -3,6 +3,8 @@ import type { ContactFormInputs } from "../types";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { profile } from "../lib/data";
 import InputField from "../components/ui/input";
+import Player from "lottie-react";
+import codingAnimation from "../components/lottie/coding.json";
 
 function ContactSection() {
   const {
@@ -25,43 +27,56 @@ function ContactSection() {
 
   return (
     <section className="container mx-auto px-6 py-16" id="contact">
-      <div className="grid md:grid-cols-2 gap-10">
+      <div className="w-full h-64 md:h-80 my-8">
+        <Player
+          autoplay
+          loop
+          animationData={codingAnimation}
+          style={{ width: "100%", height: "100%" }}
+        />
+      </div>
+      <div className="grid md:grid-cols-2 gap-10 items-start">
         <div>
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-50">
-            Let&apos;s connect
-          </h3>
-          <p className="mt-2 text-gray-700 dark:text-gray-200">
-            I&apos;m open to collaborations, roles, and interesting challenges.
-            Feel free to reach out!
-          </p>
-          <ul className="mt-6 space-y-3">
-            <li className="flex items-center gap-3 text-gray-800 dark:text-gray-100">
-              <Mail size={18} className="text-blue-600 dark:text-blue-400" />
-              <a href={`mailto:${profile.email}`} className="hover:underline">
-                {profile.email}
-              </a>
-            </li>
-            <li className="flex items-center gap-3 text-gray-800 dark:text-gray-100">
-              <MapPin size={18} className="text-blue-600 dark:text-blue-400" />
-              <span>{profile.location}</span>
-            </li>
-            <li className="flex items-center gap-3 text-gray-800 dark:text-gray-100">
-              <Phone size={18} className="text-blue-600 dark:text-blue-400" />
-              <span>{profile.phone}</span>
-            </li>
-          </ul>
-          <div className="mt-6 flex gap-4">
-            {profile.socials.map((s) => (
-              <a
-                key={s.label}
-                href={s.href}
-                target="_blank"
-                rel="noreferrer"
-                className="text-blue-600 dark:text-blue-400 hover:underline"
-              >
-                {s.label}
-              </a>
-            ))}
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-50">
+            Contact Me
+          </h2>
+          <div className="flex flex-col items-start">
+            <p className="mt-2 text-gray-700 dark:text-gray-200">
+              I&apos;m open to collaborations, roles, and interesting
+              challenges. Feel free to reach out!
+            </p>
+            <ul className="mt-6 space-y-3">
+              <li className="flex items-center gap-3 text-gray-800 dark:text-gray-100">
+                <Mail size={18} className="text-blue-600 dark:text-blue-400" />
+                <a href={`mailto:${profile.email}`} className="hover:underline">
+                  {profile.email}
+                </a>
+              </li>
+              <li className="flex items-center gap-3 text-gray-800 dark:text-gray-100">
+                <MapPin
+                  size={18}
+                  className="text-blue-600 dark:text-blue-400"
+                />
+                <span>{profile.location}</span>
+              </li>
+              <li className="flex items-center gap-3 text-gray-800 dark:text-gray-100">
+                <Phone size={18} className="text-blue-600 dark:text-blue-400" />
+                <span>{profile.phone}</span>
+              </li>
+            </ul>
+            <div className="mt-6 flex gap-4">
+              {profile.socials.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-blue-600 dark:text-blue-400 hover:underline"
+                >
+                  {s.label}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
         <form

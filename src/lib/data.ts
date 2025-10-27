@@ -1,4 +1,4 @@
-import type { ExperienceNode, SkillCategory } from "../types";
+import type { ExperienceNode } from "../types";
 
 export const profile = {
   name: "Ung Ta Hoang Tuan",
@@ -49,8 +49,9 @@ export const experiences: ExperienceNode[] = [
       "40K+ new visitors attracted",
       "35% organic traffic increase",
     ],
-    icon: "🚀",
-    color: "from-blue-500 to-purple-600",
+    icon: "/public/roadmap/nodo.png",
+    size: "w-8 h-8",
+    color: "white",
     isActive: true,
   },
   {
@@ -147,341 +148,107 @@ export const experiences: ExperienceNode[] = [
   },
 ];
 
-export const skillCategories: Record<string, SkillCategory> = {
+export const skillCategories = {
   frontend: {
-    title: "Frontend Frameworks",
+    title: "Frontend",
     skills: [
       {
-        name: "ReactJS",
-        level: 85,
-        icon: "⚛️",
+        name: "React",
         projects: [
           "NODO AI Trading Platform ($4.5M liquidity)",
           "360F Micro-frontend (50K+ users)",
           "Insurance Platform (10K+ clients)",
         ],
-        description:
-          "Built enterprise-grade applications with complex state management and real-time data",
       },
       {
-        name: "Vue2",
-        level: 80,
-        icon: "💚",
-        projects: ["NODO DApp Features (200K+ users)"],
-        description:
-          "Developed interactive blockchain and Defi community features interfaces",
+        name: "Vue",
+        projects: ["NODO DApp Community Features (200K+ users)"],
       },
       {
-        name: "Nuxt2",
-        level: 78,
-        icon: "🚀",
-        projects: ["NODO Community Features"],
-        description:
-          "SEO-optimized server-side rendered applications for enhanced discoverability",
+        name: "TypeScript",
+        projects: ["NODO AI Trading Platform", "360F Micro-frontend"],
       },
       {
-        name: "HTML5",
-        level: 85,
-        icon: "🌐",
-        projects: [
-          "All Projects",
-          "Landing Pages (40K+ visitors)",
-          "Component Libraries",
-        ],
-        description:
-          "Semantic markup for accessibility and SEO optimization across all projects",
+        name: "TailwindCSS",
+        projects: ["NODO Trading Platform", "Modern Landing Pages"],
       },
-      {
-        name: "CSS3",
-        level: 82,
-        icon: "🎨",
-        projects: [
-          "Responsive Web Interfaces",
-          "Material UI Customizations",
-          "360F Design System",
-        ],
-        description:
-          "Advanced styling with animations, responsive design, and design system implementation",
-      },
-      {
-        name: "JavaScript (ES6+)",
-        level: 83,
-        icon: "⚡",
-        projects: ["All Projects"],
-        description:
-          "Modern JavaScript for complex business logic and real-time financial data processing",
-      },
-    ],
-  },
-  ui: {
-    title: "UI Libraries & Styling",
-    skills: [
       {
         name: "Material UI",
-        level: 82,
-        icon: "📱",
         projects: [
           "360F Insurance Platform",
           "Reusable Component Libraries",
           "20+ Application Modules",
         ],
-        description:
-          "Built consistent UI components following Material Design principles for enterprise applications",
       },
       {
         name: "Ant Design",
-        level: 80,
-        icon: "🐜",
-        projects: [
-          "NODO DApp Community Features",
-          "Enterprise Dashboards",
-          "Admin Interfaces",
-        ],
-        description:
-          "Implemented professional admin interfaces and complex data visualization components",
+        projects: ["NODO DApp Community Features", "NODO admin page"],
       },
+      { name: "Shadcn UI", projects: ["NODO AI Trading Platform"] },
       {
-        name: "Tailwind CSS",
-        level: 85,
-        icon: "💨",
-        projects: [
-          "NODO Trading Platform",
-          "Modern Landing Pages",
-          "Component Styling",
-        ],
-        description:
-          "Utility-first CSS for rapid development and consistent design systems",
-      },
-      {
-        name: "Framer Motion",
-        level: 78,
-        icon: "🎭",
-        projects: [
-          "NODO Platform Animations",
-          "Interactive UI Elements",
-          "Page Transitions",
-        ],
-        description:
-          "Advanced animations and micro-interactions for enhanced user experience",
-      },
-      {
-        name: "SCSS/SASS",
-        level: 80,
-        icon: "💎",
-        projects: [
-          "360F Styling Architecture",
-          "Design System Variables",
-          "Responsive Layouts",
-        ],
-        description:
-          "Structured styling with variables, mixins, and modular architecture",
-      },
-      {
-        name: "Responsive Design",
-        level: 85,
-        icon: "📐",
-        projects: [
-          "All Projects",
-          "Mobile-first Approach",
-          "Cross-device Compatibility",
-        ],
-        description:
-          "WCAG 2.1 compliant responsive interfaces ensuring inclusive user experience",
+        name: "Motion",
+        projects: ["NODO Trading Platform", "Modern Landing Pages"],
       },
     ],
   },
   backend: {
-    title: "API & State Management",
+    title: "Backend",
     skills: [
-      {
-        name: "Axios",
-        level: 82,
-        icon: "🔗",
-        projects: [
-          "All API Integrations",
-          "Real-time Trading Data",
-          "Dynamic UI Components",
-        ],
-        description:
-          "HTTP client for seamless API integration and real-time data fetching",
-      },
-      {
-        name: "RESTful APIs",
-        level: 80,
-        icon: "🌍",
-        projects: [
-          "360F Insurance APIs",
-          "NODO Trading APIs",
-          "Third-party Integrations",
-        ],
-        description:
-          "Integration with enterprise-grade APIs for financial and insurance platforms",
-      },
-      {
-        name: "Redux",
-        level: 78,
-        icon: "🔄",
-        projects: [
-          "360F State Management",
-          "Complex Application State",
-          "Cross-component Data",
-        ],
-        description:
-          "Predictable state management for large-scale applications with complex data flows",
-      },
-      {
-        name: "Redux-toolkit",
-        level: 75,
-        icon: "🛠️",
-        projects: [
-          "Modern Redux Implementation",
-          "Simplified State Logic",
-          "API State Management",
-        ],
-        description:
-          "Modern Redux patterns with reduced boilerplate for efficient development",
-      },
-      {
-        name: "React-query",
-        level: 78,
-        icon: "⚡",
-        projects: [
-          "NODO Trading Platform",
-          "Data Caching",
-          "Server State Management",
-        ],
-        description:
-          "Powerful data fetching and caching for improved performance and user experience",
-      },
+      { name: "Node.js", projects: ["Side Project"] },
+      { name: "Express.js", projects: ["Side Project"] },
+      { name: "MongoDB", projects: ["Side Project"] },
+      { name: "Prisma", projects: ["Side Project"] },
+      { name: "MySQL", projects: ["Side Project"] },
     ],
   },
-  tools: {
-    title: "Development Tools",
+  tooling: {
+    title: "Tooling",
+    skills: [
+      { name: "esbuild", projects: ["NODO AI Trading Platform"] },
+      { name: "Vite", projects: ["NODO AI Trading Platform"] },
+      { name: "Webpack", projects: ["360F Micro-frontend"] },
+      { name: "Copilot", projects: ["All Projects"] },
+      { name: "Figma", projects: ["All Projects"] },
+    ],
+  },
+  data: {
+    title: "Data & APIs",
+    skills: [
+      { name: "REST", projects: ["360F Insurance APIs", "NODO Trading APIs"] },
+      { name: "React Query", projects: ["NODO AI Trading Platform"] },
+      { name: "Zustand", projects: ["NODO AI Trading Platform"] },
+    ],
+  },
+  quality: {
+    title: "Quality",
     skills: [
       {
-        name: "Chart.js",
-        level: 75,
-        icon: "📊",
-        projects: [
-          "360F Financial Dashboard",
-          "Data Visualization Components",
-          "Client Decision-making Tools",
-        ],
-        description:
-          "Interactive financial dashboards improving client decision-making efficiency by 25%",
+        name: "Accessibility (a11y)",
+        projects: ["360F Insurance Platform", "NODO AI Trading Platform"],
       },
       {
-        name: "Recharts.js",
-        level: 70,
-        icon: "📈",
-        projects: [
-          "Real-time Trading Charts",
-          "Performance Analytics",
-          "Data Insights Visualization",
-        ],
-        description:
-          "React-based charting library for responsive and interactive data visualization",
+        name: "SEO",
+        projects: ["NODO Trading Platform", "Modern Landing Pages"],
       },
+      { name: "Performance", projects: ["NODO AI Trading Platform"] },
+      { name: "Responsive Design", projects: ["All Projects"] },
       {
-        name: "React-hook-form",
-        level: 80,
-        icon: "📝",
-        projects: [
-          "NODO Platform Forms",
-          "User Registration",
-          "Complex Form Validation",
-        ],
-        description:
-          "Performant form management with validation for better user experience",
-      },
-      {
-        name: "Git",
-        level: 80,
-        icon: "🌿",
-        projects: [
-          "All Projects",
-          "Version Control",
-          "Collaborative Development",
-        ],
-        description:
-          "Version control for collaborative development across multiple teams and projects",
-      },
-      {
-        name: "GitHub",
-        level: 82,
-        icon: "🐙",
-        projects: ["Code Reviews", "Team Collaboration", "CI/CD Integration"],
-        description:
-          "Code reviews, mentorship, and fostering code quality in team environments",
-      },
-      {
-        name: "GitHub Copilot",
-        level: 85,
-        icon: "🤖",
-        projects: [
-          "AI-assisted Development",
-          "Code Generation",
-          "Productivity Enhancement",
-        ],
-        description:
-          "AI-powered development tool enhancing coding efficiency and code quality",
+        name: "Testing",
+        projects: ["360F Insurance Platform", "NODO AI Trading Platform"],
       },
     ],
   },
   management: {
-    title: "Project & Architecture",
+    title: "Management",
     skills: [
       {
         name: "Jira",
-        level: 75,
-        icon: "📋",
-        projects: [
-          "360F Project Management",
-          "Sprint Planning",
-          "Agile/Scrum Methodologies",
-        ],
-        description:
-          "Daily stand-ups and sprint planning with exposure to Agile/Scrum methodologies",
+        projects: ["360F Insurance Platform", "NODO AI Trading Platform"],
       },
+      { name: "Notion", projects: ["All Projects"] },
       {
-        name: "Monday",
-        level: 70,
-        icon: "📅",
-        projects: ["Team Collaboration", "Task Management", "Project Tracking"],
-        description:
-          "Project management and team collaboration for efficient workflow coordination",
-      },
-      {
-        name: "Notion",
-        level: 78,
-        icon: "📖",
-        projects: ["Documentation", "Knowledge Management", "Team Wiki"],
-        description:
-          "Comprehensive documentation and knowledge management for project continuity",
-      },
-      {
-        name: "Micro-frontend",
-        level: 80,
-        icon: "🏗️",
-        projects: [
-          "360F Enterprise Architecture",
-          "Modular Development",
-          "Team Scalability",
-        ],
-        description:
-          "Enterprise-grade micro-frontend architecture supporting 50K+ users with modular development",
-      },
-      {
-        name: "Component-based Design",
-        level: 82,
-        icon: "🧩",
-        projects: [
-          "Reusable Component Libraries",
-          "Atomic Design Principles",
-          "Development Time Reduction",
-        ],
-        description:
-          "Atomic design principles reducing development time by 40% across development teams",
+        name: "Agile/Scrum",
+        projects: ["360F Insurance Platform", "NODO AI Trading Platform"],
       },
     ],
   },
