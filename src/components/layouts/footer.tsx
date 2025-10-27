@@ -1,6 +1,6 @@
 import { profile } from "../../lib/data";
 
-function Footer() {
+const Footer = () => {
   const year = new Date().getFullYear();
   return (
     <footer className="border-t border-gray-200 dark:border-gray-800">
@@ -25,6 +25,6 @@ function Footer() {
       </div>
     </footer>
   );
-}
+};
 
 export default Footer;

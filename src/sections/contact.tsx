@@ -6,7 +6,7 @@ import InputField from "../components/ui/input";
 import Player from "lottie-react";
 import codingAnimation from "../components/lottie/coding.json";
 
-function ContactSection() {
+const ContactSection = () => {
   const {
     control,
     handleSubmit,
@@ -130,6 +130,6 @@ function ContactSection() {
       </div>
     </section>
   );
-}
+};
 
 export default ContactSection;
