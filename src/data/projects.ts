@@ -32,7 +32,7 @@ export const projects: ProjectItem[] = [
       "Maintaining performance while shipping feature-rich dashboards and blockchain interactions.",
       "Keeping conversion-focused marketing pages visually aligned with the product UI.",
     ],
-    image: "/projects/defi-platform.svg",
+    image: "/projects/defi-platform.png",
   },
   {
     slug: "enterprise-micro-frontend-platform",
@@ -63,7 +63,7 @@ export const projects: ProjectItem[] = [
       "Reducing duplicated implementation work across independently delivered modules.",
       "Maintaining consistency while evolving a distributed frontend architecture.",
     ],
-    image: "/projects/micro-frontend.svg",
+    image: "/projects/micro-frontend.png",
   },
   {
     slug: "financial-data-visualization-dashboard",
@@ -94,7 +94,7 @@ export const projects: ProjectItem[] = [
       "Keeping dashboards responsive while rendering multiple chart and table views.",
       "Ensuring accessibility within dense, analytical interfaces.",
     ],
-    image: "/projects/financial-dashboard.svg",
+    image: "/projects/financial-dashboard.png",
   },
 ];
 
