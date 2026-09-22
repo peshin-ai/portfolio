@@ -39,7 +39,7 @@ export const socialLinks: SocialLink[] = [
   },
   {
     label: "LinkedIn",
-    href: "https://www.linkedin.com/in/hoang-tuan-ung-ta-74ba19172/",
+    href: "https://www.linkedin.com/in/tuan-ung-ta-hoang-74ba19172/",
   },
 ];
 
