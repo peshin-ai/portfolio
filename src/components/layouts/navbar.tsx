@@ -1,179 +1,246 @@
-import React, { useEffect, useRef, useState } from "react";
-import type { MouseEvent } from "react";
-import { animate, motion, AnimatePresence } from "framer-motion";
-import { X, Menu } from "lucide-react";
+"use client";
 
-const NAV_LINKS = [
-  { label: "Home", href: "#home" },
-  { label: "Skills", href: "#skills" },
-  { label: "Roadmap", href: "#roadmap" },
-  { label: "Contact", href: "#contact" },
-];
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import {
+  Github,
+  Linkedin,
+  Menu,
+  Moon,
+  Sun,
+  X,
+} from "lucide-react";
+import {
+  AnimatePresence,
+  motion,
+} from "framer-motion";
+import { useTheme } from "next-themes";
+import {
+  navigation,
+  profile,
+  socialLinks,
+} from "@/data/profile";
+import { Button } from "@/components/ui/button";
 
-const NavBar: React.FC = () => {
+export function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState<string>(NAV_LINKS[0].href);
-  const headerRef = useRef<HTMLDivElement>(null);
-
-  const handleNavClick = (
-    e: MouseEvent<HTMLAnchorElement>,
-    link: { label: string; href: string }
-  ) => {
-    e.preventDefault();
-    const id = link.href.replace("#", "");
-    const el = document.getElementById(id);
-    const isHome = id === "home";
-    if (el) {
-      const y =
-        el.getBoundingClientRect().top + window.scrollY + (isHome ? -100 : 0);
-      animate(window.scrollY, y, {
-        duration: 0.7,
-        ease: [0.22, 1, 0.36, 1],
-        onUpdate: (v) => window.scrollTo(0, v),
-      });
-    }
-    setDrawerOpen(false);
-    setActiveSection(link.href);
-  };
+  const { resolvedTheme, setTheme } = useTheme();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 24);
-      // Section detection
-      let found = NAV_LINKS[0].href;
-      for (const link of NAV_LINKS) {
-        const id = link.href.replace("#", "");
-        const el = document.getElementById(id);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= 80 && rect.bottom > 80) {
-            found = link.href;
-            break;
-          }
-        }
-      }
-      setActiveSection(found);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () =>
+      setScrolled(window.scrollY > 12);
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, {
+      passive: true,
+    });
+
+    return () =>
+      window.removeEventListener(
+        "scroll",
+        onScroll,
+      );
   }, []);
 
+  const isDark = resolvedTheme !== "light";
+
   return (
-    <header className="w-full sticky top-0 z-50 flex justify-center transition-all duration-300">
-      <div
-        className={`transition-all duration-300 shadow-lg text-white ${
-          scrolled
-            ? "max-w-5xl rounded-b-2xl w-full bg-gray-900"
-            : "w-full bg-gray-900"
-        }`}
-        style={{ maxWidth: scrolled ? "80rem" : "100%" }}
-      >
+    <header className="fixed inset-x-0 top-0 z-50">
+      <div className="shell pt-4">
         <div
-          ref={headerRef}
-          className={`flex items-center justify-between px-6 py-4 transition-all duration-300 ${
-            scrolled ? "mx-auto" : "w-full "
-          }`}
+          className={[
+            "flex items-center justify-between rounded-full border px-4 py-3 transition-all duration-300 sm:px-6",
+            scrolled
+              ? "border-border/80 bg-background/78 shadow-panel backdrop-blur-xl"
+              : "border-transparent bg-background/40 backdrop-blur-md",
+          ].join(" ")}
         >
-          <span className="text-2xl font-extrabold tracking-tight select-none">
-            Tuan Ung
-          </span>
-          {/* Desktop nav */}
-          <nav className="hidden md:flex gap-4 md:gap-8 text-base font-semibold relative">
-            {NAV_LINKS.map((link) => {
-              const isActive = activeSection === link.href;
-              return (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  className={`relative px-2 py-1 hover:text-yellow-300 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-300 ${
-                    isActive ? "text-yellow-300" : ""
-                  }`}
-                  onClick={(e) => handleNavClick(e, link)}
-                >
-                  {link.label}
-                  {/* Animated underline */}
-                  <span
-                    className="absolute left-0 right-0 -bottom-1 h-0.5"
-                    style={{
-                      background: isActive
-                        ? "linear-gradient(90deg, #facc15 60%, #fbbf24 100%)"
-                        : "transparent",
-                      borderRadius: 2,
-                      transition: "background 0.3s",
-                    }}
-                  />
-                </a>
-              );
-            })}
-          </nav>
-          {/* Mobile menu icon */}
-          <button
-            className="md:hidden flex items-center justify-center p-2 rounded hover:bg-gray-800 focus:outline-none"
-            aria-label="Open menu"
-            onClick={() => setDrawerOpen((v) => !v)}
+          <Link
+            href="/"
+            className="text-sm font-semibold tracking-[0.24em] text-foreground sm:text-base"
           >
-            <Menu size={28} strokeWidth={2} />
-          </button>
-        </div>
-        {/* Mobile drawer */}
-        <AnimatePresence>
-          {drawerOpen && (
-            <motion.div
-              className="fixed inset-0 z-50 bg-black bg-opacity-60 flex"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <motion.div
-                className="ml-auto w-64 bg-gray-900 h-full shadow-lg flex flex-col p-6"
-                initial={{ x: 300 }}
-                animate={{ x: 0 }}
-                exit={{ x: 300 }}
-                transition={{ type: "spring", stiffness: 400, damping: 32 }}
+            {profile.name}
+          </Link>
+
+          <nav className="hidden items-center gap-6 lg:flex">
+            {navigation.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
               >
-                <button
-                  className="self-end mb-6 p-2 rounded hover:bg-gray-800"
-                  aria-label="Close menu"
-                  onClick={() => setDrawerOpen(false)}
-                >
-                  <X size={28} strokeWidth={2} />
-                </button>
-                <nav className="flex flex-col gap-6 text-lg font-semibold">
-                  {NAV_LINKS.map((link) => {
-                    const isActive = activeSection === link.href;
-                    return (
-                      <a
-                        key={link.label}
-                        href={link.href}
-                        className={`px-2 py-1 hover:text-yellow-300 transition ${
-                          isActive ? "text-yellow-300" : ""
-                        }`}
-                        onClick={(e) => handleNavClick(e, link)}
-                      >
-                        {link.label}
-                        {isActive && (
-                          <span
-                            className="block h-0.5 mt-1 w-full"
-                            style={{
-                              background:
-                                "linear-gradient(90deg, #facc15 60%, #fbbf24 100%)",
-                              borderRadius: 2,
-                            }}
-                          />
-                        )}
-                      </a>
-                    );
-                  })}
-                </nav>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="hidden items-center gap-2 lg:flex">
+            <Button
+              asChild
+              variant="ghost"
+              size="sm"
+              className="rounded-full"
+            >
+              <a
+                href={socialLinks[0].href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="GitHub"
+              >
+                <Github className="h-4 w-4" />
+              </a>
+            </Button>
+            <Button
+              asChild
+              variant="ghost"
+              size="sm"
+              className="rounded-full"
+            >
+              <a
+                href={socialLinks[1].href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="h-4 w-4" />
+              </a>
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              className="rounded-full"
+              aria-label="Toggle theme"
+              onClick={() =>
+                setTheme(
+                  isDark ? "light" : "dark",
+                )
+              }
+            >
+              {isDark ? (
+                <Sun className="h-4 w-4" />
+              ) : (
+                <Moon className="h-4 w-4" />
+              )}
+            </Button>
+          </div>
+
+          <div className="flex items-center gap-2 lg:hidden">
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="rounded-full"
+              aria-label="Toggle theme"
+              onClick={() =>
+                setTheme(
+                  isDark ? "light" : "dark",
+                )
+              }
+            >
+              {isDark ? (
+                <Sun className="h-4 w-4" />
+              ) : (
+                <Moon className="h-4 w-4" />
+              )}
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="rounded-full"
+              aria-label="Open navigation"
+              onClick={() => setMenuOpen(true)}
+            >
+              <Menu className="h-5 w-5" />
+            </Button>
+          </div>
+        </div>
       </div>
+
+      <AnimatePresence>
+        {menuOpen ? (
+          <motion.div
+            className="fixed inset-0 z-50 bg-slate-950/55 backdrop-blur-sm lg:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="ml-auto flex h-full w-full max-w-sm flex-col border-l border-border/70 bg-background p-6"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{
+                duration: 0.28,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            >
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-semibold tracking-[0.2em] text-foreground">
+                  Menu
+                </span>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-full"
+                  aria-label="Close navigation"
+                  onClick={() =>
+                    setMenuOpen(false)
+                  }
+                >
+                  <X className="h-5 w-5" />
+                </Button>
+              </div>
+
+              <nav className="mt-10 flex flex-col gap-4">
+                {navigation.map((item) => (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className="rounded-2xl border border-border/60 px-4 py-3 text-sm font-medium text-foreground transition-colors hover:bg-secondary"
+                    onClick={() =>
+                      setMenuOpen(false)
+                    }
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </nav>
+
+              <div className="mt-auto flex gap-3 pt-8">
+                <Button
+                  asChild
+                  variant="outline"
+                  className="flex-1 rounded-full"
+                >
+                  <a
+                    href={socialLinks[0].href}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    GitHub
+                  </a>
+                </Button>
+                <Button
+                  asChild
+                  className="flex-1 rounded-full"
+                >
+                  <a
+                    href={socialLinks[1].href}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    LinkedIn
+                  </a>
+                </Button>
+              </div>
+            </motion.div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </header>
   );
-};
-
-export default NavBar;
+}

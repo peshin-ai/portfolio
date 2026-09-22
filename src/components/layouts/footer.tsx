@@ -1,30 +1,39 @@
-import { profile } from "../../lib/data";
+import {
+  profile,
+  socialLinks,
+} from "@/data/profile";
 
-const Footer = () => {
+export function Footer() {
   const year = new Date().getFullYear();
+
   return (
-    <footer className="border-t border-gray-200 dark:border-gray-800">
-      <div className="container mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
-        <p className="text-sm text-gray-600 dark:text-gray-300">
-          © {year} {profile.name}. All rights reserved.
+    <footer className="border-t border-border/70 py-8">
+      <div className="shell flex flex-col gap-4 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+        <p>
+          © {year} {profile.name}. Frontend
+          Developer with Web3 and Fintech product
+          experience.
         </p>
-        <ul className="flex items-center gap-5">
-          {profile.socials.map((s) => (
-            <li key={s.label}>
-              <a
-                href={s.href}
-                target="_blank"
-                rel="noreferrer"
-                className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
-              >
-                {s.label}
-              </a>
-            </li>
+        <div className="flex flex-wrap gap-4">
+          {socialLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              target="_blank"
+              rel="noreferrer"
+              className="transition-colors hover:text-foreground"
+            >
+              {link.label}
+            </a>
           ))}
-        </ul>
+          <a
+            href={`mailto:${profile.email}`}
+            className="transition-colors hover:text-foreground"
+          >
+            Email
+          </a>
+        </div>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

@@ -1,50 +1,49 @@
-import type { Control } from "react-hook-form";
+export type NavItem = {
+  label: string;
+  href: string;
+};
 
-export interface ExperienceNode {
-  id: string;
+export type SocialLink = {
+  label: string;
+  href: string;
+};
+
+export type Metric = {
+  label: string;
+  value: string;
+  detail: string;
+};
+
+export type EngineeringFocusItem = {
+  title: string;
+  description: string;
+};
+
+export type ExperienceItem = {
+  slug: string;
   company: string;
-  position: string;
-  duration: string;
-  period: string;
+  role: string;
   location: string;
+  period: string;
+  summary: string;
   highlights: string[];
   technologies: string[];
-  achievements: string[];
-  icon: string;
-  color: string;
-  size?: string;
-  isActive?: boolean;
-}
+};
 
-export interface Skill {
-  name: string;
-  level: number;
-  icon: string;
-  category?: string;
-  projects: string[];
-  description: string;
-}
-
-export interface SkillCategory {
+export type ProjectItem = {
+  slug: string;
   title: string;
-  skills: Skill[];
-}
+  description: string;
+  role: string;
+  status: string;
+  impact: string[];
+  technologies: string[];
+  contributions: string[];
+  challenges: string[];
+  image: string;
+};
 
-export interface ContactFormInputs {
-  name: string;
-  email: string;
-  message: string;
-}
-
-export interface InputFieldProps {
-  name: keyof ContactFormInputs;
-  label: string;
-  control: Control<ContactFormInputs>;
-  type?: string;
-  placeholder?: string;
-  rules?: any;
-  multiline?: boolean;
-  rows?: number;
-  autoComplete?: string;
-  errors?: any;
-}
+export type SkillCategory = {
+  title: string;
+  skills: string[];
+};
